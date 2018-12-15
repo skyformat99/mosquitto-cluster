@@ -105,7 +105,7 @@ WITH_EPOLL:=yes
 
 # Also bump lib/mosquitto.h, CMakeLists.txt,
 # installer/mosquitto.nsi, installer/mosquitto64.nsi
-VERSION=1.4.90
+VERSION=1.5.0
 
 # Client library SO version. Bump if incompatible API/ABI changes are made.
 SOVERSION=1
@@ -114,7 +114,6 @@ SOVERSION=1
 XSLTPROC=xsltproc
 # For html generation
 DB_HTML_XSL=man/html.xsl
-TIMESTAMP:=$(shell date "+%F %T%z")
 
 #MANCOUNTRIES=en_GB
 
@@ -131,10 +130,10 @@ else
 endif
 
 LIB_CFLAGS:=${CFLAGS} ${CPPFLAGS} -I. -I.. -I../lib
-LIB_CXXFLAGS:=$(LIB_CFLAGS) ${CPPFLAGS}
+LIB_CXXFLAGS:=$(CFLAGS) ${CPPFLAGS} -I. -I.. -I../lib
 LIB_LDFLAGS:=${LDFLAGS}
 
-BROKER_CFLAGS:=${LIB_CFLAGS} ${CPPFLAGS} -DVERSION="\"${VERSION}\"" -DTIMESTAMP="\"${TIMESTAMP}\"" -DWITH_BROKER
+BROKER_CFLAGS:=${LIB_CFLAGS} ${CPPFLAGS} -DVERSION="\"${VERSION}\"" -DWITH_BROKER
 CLIENT_CFLAGS:=${CFLAGS} ${CPPFLAGS} -I../lib -DVERSION="\"${VERSION}\""
 
 ifneq ($(or $(findstring $(UNAME),FreeBSD), $(findstring $(UNAME),OpenBSD)),)
